@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raphaël Ferry — Fractional Sales Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0b1120;
+    --navy2: #131e30;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --blue-mid: #93c5fd;
+    --white: #ffffff;
+    --off-white: #f8f9fc;
+    --gray-100: #f1f4f9;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --text: #0f172a;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); color: var(--text); background: var(--off-white); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(11,17,32,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-name { font-family: var(--serif); font-size: 18px; color: var(--white); letter-spacing: -0.02em; }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    font-size: 12px; font-weight: 500;
+    background: var(--blue); color: var(--white) !important;
+    padding: .35rem .9rem; border-radius: 6px; text-decoration: none !important;
+    transition: background .2s !important;
+  }
+  .nav-cta:hover { background: #1d4ed8 !important; }
+
+  /* HERO */
+  #hero {
+    background: var(--navy);
+    padding: 120px 2rem 80px;
+    min-height: 100vh;
+    display: flex; align-items: center;
+  }
+  .hero-inner { max-width: 780px; margin: 0 auto; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: 12px; color: var(--blue-mid); letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow span { width: 24px; height: 1px; background: var(--blue-mid); display: inline-block; }
+  .hero-title {
+    font-family: var(--serif); font-size: clamp(42px, 6vw, 68px);
+    color: var(--white); line-height: 1.08; letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em { font-style: italic; color: var(--blue-mid); }
+  .hero-sub {
+    font-size: 17px; color: rgba(255,255,255,0.55); line-height: 1.7;
+    max-width: 560px; margin-bottom: 2rem;
+  }
+  .hero-sub strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2.5rem; }
+  .hero-tag {
+    font-size: 12px; color: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
+    padding: .25rem .75rem;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--blue); color: var(--white);
+    font-size: 14px; font-weight: 500;
+    padding: .75rem 1.5rem; border-radius: 8px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s, transform .15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+  .btn-ghost {
+    font-size: 14px; color: rgba(255,255,255,0.5);
+    text-decoration: none; display: flex; align-items: center; gap: .3rem;
+    transition: color .2s;
+  }
+  .btn-ghost:hover { color: var(--white); }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius-lg);
+    margin-top: 4rem; overflow: hidden;
+  }
+  .hero-stat {
+    background: rgba(255,255,255,0.03);
+    padding: 1.25rem 1rem; text-align: center;
+  }
+  .hero-stat-val { font-family: var(--serif); font-size: 28px; color: var(--white); line-height: 1; margin-bottom: .3rem; }
+  .hero-stat-lab { font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: .06em; }
+
+  /* SECTIONS */
+  section { padding: 80px 2rem; }
+  .container { max-width: 860px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 500; color: var(--blue);
+    text-transform: uppercase; letter-spacing: .1em; margin-bottom: .75rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .section-label::before { content: ''; width: 20px; height: 1px; background: var(--blue); display: inline-block; }
+  .section-title { font-family: var(--serif); font-size: clamp(28px, 4vw, 38px); color: var(--gray-800); line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1rem; }
+  .section-sub { font-size: 15px; color: var(--gray-600); max-width: 520px; }
+
+  /* SERVICES */
+  #services { background: var(--white); }
+  .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--gray-200); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; margin-top: 2.5rem; }
+  .service-card { background: var(--white); padding: 1.75rem; position: relative; transition: background .2s; }
+  .service-card:hover { background: var(--off-white); }
+  .service-card.featured { background: var(--navy); }
+  .service-card.featured:hover { background: var(--navy2); }
+  .service-num { font-family: var(--serif); font-size: 13px; color: var(--gray-400); margin-bottom: .75rem; }
+  .service-card.featured .service-num { color: rgba(255,255,255,0.3); }
+  .service-title { font-size: 18px; font-weight: 500; color: var(--gray-800); margin-bottom: .6rem; }
+  .service-card.featured .service-title { color: var(--white); }
+  .service-desc { font-size: 13px; color: var(--gray-600); line-height: 1.65; margin-bottom: 1rem; }
+  .service-card.featured .service-desc { color: rgba(255,255,255,0.5); }
+  .service-badge { font-size: 11px; padding: .25rem .65rem; border-radius: 20px; display: inline-block; }
+  .badge-blue { background: var(--blue-light); color: #1e40af; }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-purple { background: #f3e8ff; color: #6b21a8; }
+  .badge-teal { background: #ccfbf1; color: #134e4a; }
+  .badge-navy { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
+
+  /* PROOF */
+  #proof { background: var(--off-white); }
+  .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: 2.5rem; }
+  .proof-card {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: var(--radius); padding: 1.25rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .proof-card:hover { border-color: var(--blue-mid); transform: translateY(-2px); }
+  .proof-co { font-size: 12px; color: var(--blue); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .35rem; }
+  .proof-result { font-size: 15px; font-weight: 500; color: var(--gray-800); margin-bottom: .35rem; line-height: 1.4; }
+  .proof-detail { font-size: 12px; color: var(--gray-400); }
+
+  /* HOW */
+  #how { background: var(--white); }
+  .how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 2.5rem; }
+  .how-step { text-align: center; padding: 1.5rem 1rem; position: relative; }
+  .how-step::after {
+    content: '→'; position: absolute; right: -8px; top: 1.75rem;
+    font-size: 14px; color: var(--gray-200);
+  }
+  .how-step:last-child::after { display: none; }
+  .how-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--navy); color: var(--white);
+    font-family: var(--serif); font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto .75rem;
+  }
+  .how-title { font-size: 14px; font-weight: 500; color: var(--gray-800); margin-bottom: .35rem; }
+  .how-desc { font-size: 12px; color: var(--gray-400); line-height: 1.5; }
+
+  /* DIAGNOSTIC */
+  #diagnostic { background: var(--off-white); }
+  .diag-wrap { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 2rem; margin-top: 2rem; }
+  .progress-bar { height: 3px; background: var(--gray-100); border-radius: 2px; margin-bottom: 2rem; }
+  .progress-fill { height: 100%; background: var(--blue); border-radius: 2px; transition: width .4s ease; }
+  .step { display: none; }
+  .step.active { display: block; }
+  .step-eyebrow { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: .07em; margin-bottom: .4rem; }
+  .step-title { font-family: var(--serif); font-size: 22px; color: var(--gray-800); margin-bottom: 1.5rem; }
+  .q-label { font-size: 13px; font-weight: 500; color: var(--gray-600); margin-bottom: .6rem; }
+  .q-group { margin-bottom: 1.4rem; }
+  .pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .pill {
+    border: 1px solid var(--gray-200); border-radius: 20px;
+    padding: .35rem .85rem; font-size: 13px; cursor: pointer;
+    background: var(--white); color: var(--gray-600);
+    font-family: var(--sans); transition: all .15s;
+  }
+  .pill:hover { border-color: var(--blue); color: var(--blue); }
+  .pill.sel { background: var(--blue-light); border-color: #93c5fd; color: #1e40af; }
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: .6rem; }
+  .q-card {
+    border: 1px solid var(--gray-200); border-radius: var(--radius);
+    padding: .85rem .75rem; cursor: pointer; background: var(--white);
+    text-align: left; transition: all .15s; font-family: var(--sans);
+  }
+  .q-card:hover { border-color: var(--blue); }
+  .q-card.sel { background: var(--blue-light); border-color: #93c5fd; }
+  .q-card-title { font-size: 13px; font-weight: 500; color: var(--gray-800); display: block; margin-top: .3rem; }
+  .q-card-sub { font-size: 11px; color: var(--gray-400); display: block; margin-top: .2rem; }
+  .diag-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 1.75rem; }
+  .btn-back { font-size: 13px; color: var(--gray-400); background: none; border: none; cursor: pointer; font-family: var(--sans); }
+  .btn-back:hover { color: var(--gray-800); }
+  .diag-counter { font-size: 12px; color: var(--gray-400); }
+  .btn-next {
+    background: var(--navy); color: var(--white);
+    font-size: 13px; font-weight: 500; border: none;
+    padding: .6rem 1.3rem; border-radius: 7px; cursor: pointer;
+    font-family: var(--sans); transition: background .2s;
+  }
+  .btn-next:hover { background: var(--blue); }
+
+  /* RESULT */
+  #result { display: none; padding: 2rem; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); margin-top: 2rem; }
+  .result-badge { display: inline-block; font-size: 12px; font-weight: 500; padding: .3rem .85rem; border-radius: 20px; margin-bottom: .75rem; }
+  .result-title { font-family: var(--serif); font-size: 26px; color: var(--gray-800); margin-bottom: .4rem; }
+  .result-sub { font-size: 14px; color: var(--gray-600); margin-bottom: 1.5rem; }
+  .result-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.5rem; }
+  .result-num-card { background: var(--off-white); border-radius: var(--radius); padding: 1rem; }
+  .result-num-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .3rem; }
+  .result-num-val { font-family: var(--serif); font-size: 26px; color: var(--gray-800); }
+  .result-num-sub { font-size: 11px; color: var(--gray-400); margin-top: .2rem; }
+  .scope-list { border: 1px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
+  .scope-item { display: flex; gap: .6rem; align-items: center; padding: .65rem 1rem; border-bottom: 1px solid var(--gray-100); font-size: 13px; color: var(--gray-600); }
+  .scope-item:last-child { border-bottom: none; }
+  .scope-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+  .result-cta {
+    display: block; width: 100%; text-align: center;
+    background: var(--blue); color: var(--white);
+    font-size: 14px; font-weight: 500; border: none;
+    padding: .85rem; border-radius: 8px; cursor: pointer;
+    font-family: var(--sans); text-decoration: none;
+    transition: background .2s;
+  }
+  .result-cta:hover { background: #1d4ed8; }
+  .btn-restart { display: block; width: 100%; text-align: center; margin-top: .6rem; font-size: 13px; color: var(--gray-400); background: none; border: none; cursor: pointer; font-family: var(--sans); }
+  .btn-restart:hover { color: var(--gray-800); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.4);
+    padding: 2.5rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-name { font-family: var(--serif); font-size: 16px; color: var(--white); }
+  .footer-links { display: flex; gap: 1.5rem; align-items: center; }
+  .footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--white); }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    .hero-stats { grid-template-columns: repeat(2,1fr); }
+    .services-grid { grid-template-columns: 1fr; }
+    .proof-grid { grid-template-columns: 1fr; }
+    .how-steps { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .result-numbers { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">Raphaël Ferry</div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#proof">Proof</a>
+    <a href="#diagnostic">Pricing</a>
+    <a href="#diagnostic" class="nav-cta">Get a quote →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span></span> Fractional Sales Partner</div>
+    <h1 class="hero-title">
+      I build sales engines<br>
+      <em>that actually run.</em>
+    </h1>
+    <p class="hero-sub">
+      Senior B2B sales expertise, <strong>fractional cost</strong>, zero fluff.<br>
+      From zero pipeline to a running outbound machine — across US, LATAM and Europe.
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag">🇫🇷 French</span>
+      <span class="hero-tag">🇦🇷 Buenos Aires</span>
+      <span class="hero-tag">🇪🇸 Spanish fluent</span>
+      <span class="hero-tag">🇺🇸 English pro</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#diagnostic" class="btn-primary">Run the diagnostic →</a>
+      <a href="#proof" class="btn-ghost">See proof of work ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val">15+</div>
+        <div class="hero-stat-lab">Years B2B sales</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">Full</div>
+        <div class="hero-stat-lab">Sales cycle</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">3</div>
+        <div class="hero-stat-lab">Active geographies</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">8+</div>
+        <div class="hero-stat-lab">Sales engines built</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-label fade-up">What I do</div>
+    <h2 class="section-title fade-up">Four ways I can help</h2>
+    <p class="section-sub fade-up">Pick the one that fits where you are today. Or take the diagnostic and I'll tell you.</p>
+    <div class="services-grid fade-up">
+      <div class="service-card featured">
+        <div class="service-num">01</div>
+        <div class="service-title">Sales Builder</div>
+        <div class="service-desc">ICP definition, messaging, outbound stack, sequences, pipeline. For founders still doing all the selling themselves.</div>
+        <span class="service-badge badge-navy">Pre-revenue → early stage</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-title">Revenue Accelerator</div>
+        <div class="service-desc">Pipeline audit, outbound optimization, closing coaching. For teams with the basics in place but stuck at a plateau.</div>
+        <span class="service-badge badge-green">Growth stage</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-title">Sales Coach & Advisor</div>
+        <div class="service-desc">Process structuring, playbooks, 1:1 coaching, hiring support. For teams with reps in place but no real method.</div>
+        <span class="service-badge badge-purple">Scale-up</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-title">New Market Entry</div>
+        <div class="service-desc">LATAM or EMEA launch: market mapping, GTM adaptation, local network, first deals. 6 years on the ground in Latin America.</div>
+        <span class="service-badge badge-teal">LATAM · EMEA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section id="proof">
+  <div class="container">
+    <div class="section-label fade-up">Proof of work</div>
+    <h2 class="section-title fade-up">Results, not promises</h2>
+    <p class="section-sub fade-up">A selection of recent engagements across geographies and sectors.</p>
+    <div class="proof-grid fade-up">
+      <div class="proof-card">
+        <div class="proof-co">Canadian Fintech · US / UK / CA</div>
+        <div class="proof-result">Built the sales dept from scratch → $50k MRR in 9 months</div>
+        <div class="proof-detail">Sales Builder · HubSpot, Amplemarket, Calendly</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-co">US IT Consultancy · Remote</div>
+        <div class="proof-result">Multichannel outbound engine → ×10 qualified meetings/month</div>
+        <div class="proof-detail">Revenue Accelerator · LinkedIn + cold email sequences</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-co">Spanish SaaS Platform · Spain</div>
+        <div class="proof-result">Structured & managed a team of 8 sales reps</div>
+        <div class="proof-detail">Sales Coach · Process mapping, hiring, training</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-co">Danish HRtech SaaS · EU & LATAM</div>
+        <div class="proof-result">100 customers onboarded across two continents</div>
+        <div class="proof-detail">Sales Builder · Full cycle + HubSpot implementation</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-co">French SAP Consultancy · Paris</div>
+        <div class="proof-result">+€550K net margin · 15 enterprise accounts opened</div>
+        <div class="proof-detail">Revenue Accelerator · Key accounts, integrators</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-co">Danish GreenTech SaaS · LATAM launch</div>
+        <div class="proof-result">80 demos booked — market entry from zero</div>
+        <div class="proof-detail">New Market Entry · LATAM GTM, full-cycle</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-co">LATAM Design Services · Remote</div>
+        <div class="proof-result">Outbound engine built for MedTech & robotics verticals</div>
+        <div class="proof-detail">Sales Builder · LinkedIn, cold email, CRM setup</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="section-label fade-up">Process</div>
+    <h2 class="section-title fade-up">How it works</h2>
+    <p class="section-sub fade-up">Fast to start, clear on scope, focused on results.</p>
+    <div class="how-steps fade-up">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-title">Diagnostic</div>
+        <div class="how-desc">5-min questionnaire. You get an instant scope + price estimate.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-title">Proposal</div>
+        <div class="how-desc">Custom scope, hours, pricing. No boilerplate.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-title">Kick-off</div>
+        <div class="how-desc">Aligned on goals, timeline, and first deliverables.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <div class="how-title">Execution</div>
+        <div class="how-desc">Weekly reporting, full transparency, measurable output.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSTIC -->
+<section id="diagnostic">
+  <div class="container">
+    <div class="section-label fade-up">Pricing diagnostic</div>
+    <h2 class="section-title fade-up">Not sure what you need?</h2>
+    <p class="section-sub fade-up">Answer 5 quick questions. Get an instant scope, hours estimate, and indicative pricing for your geography.</p>
+
+    <div class="diag-wrap fade-up" id="diagWrap">
+      <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:20%"></div></div>
+
+      <!-- Step 1 -->
+      <div class="step active" id="s1">
+        <div class="step-eyebrow">Step 1 / 5</div>
+        <div class="step-title">Tell me about your company</div>
+        <div class="q-group">
+          <div class="q-label">Where are you based?</div>
+          <div class="pills" data-name="country">
+            <button type="button" class="pill" data-value="FR">France</button>
+            <button type="button" class="pill" data-value="ES">Spain</button>
+            <button type="button" class="pill" data-value="LATAM">LATAM</button>
+            <button type="button" class="pill" data-value="US">US / Canada</button>
+            <button type="button" class="pill" data-value="EU">Europe (other)</button>
+            <button type="button" class="pill" data-value="OTHER">Other</button>
+          </div>
+        </div>
+        <div class="q-group">
+          <div class="q-label">Stage of development</div>
+          <div class="cards-grid" data-name="stage">
+            <button type="button" class="q-card" data-value="pre"><span style="font-size:16px">🌱</span><span class="q-card-title">Pre-revenue</span><span class="q-card-sub">Product validated, 0 clients</span></button>
+            <button type="button" class="q-card" data-value="early"><span style="font-size:16px">🚀</span><span class="q-card-title">Early stage</span><span class="q-card-sub">First clients, scaling</span></button>
+            <button type="button" class="q-card" data-value="growth"><span style="font-size:16px">📈</span><span class="q-card-title">Growth</span><span class="q-card-sub">Revenue exists, accelerate</span></button>
+            <button type="button" class="q-card" data-value="scale"><span style="font-size:16px">🏢</span><span class="q-card-title">Scale-up</span><span class="q-card-sub">Structure / optimize</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step" id="s2">
+        <div class="step-eyebrow">Step 2 / 5</div>
+        <div class="step-title">Your current sales setup</div>
+        <div class="q-group">
+          <div class="q-label">Sales team in place?</div>
+          <div class="cards-grid" data-name="team">
+            <button type="button" class="q-card" data-value="none"><span style="font-size:16px">👤</span><span class="q-card-title">None</span><span class="q-card-sub">Founder-led sales</span></button>
+            <button type="button" class="q-card" data-value="small"><span style="font-size:16px">👥</span><span class="q-card-title">1–2 reps</span><span class="q-card-sub">Junior or mid-level</span></button>
+            <button type="button" class="q-card" data-value="team"><span style="font-size:16px">🏟</span><span class="q-card-title">Team</span><span class="q-card-sub">3+ reps, no manager</span></button>
+            <button type="button" class="q-card" data-value="structured"><span style="font-size:16px">🏗</span><span class="q-card-title">Structured</span><span class="q-card-sub">Manager + reps</span></button>
+          </div>
+        </div>
+        <div class="q-group">
+          <div class="q-label">Tools currently used (multiple ok)</div>
+          <div class="pills" data-name="tools" data-multi="true">
+            <button type="button" class="pill" data-value="crm">CRM (HubSpot, Pipedrive…)</button>
+            <button type="button" class="pill" data-value="outbound">Outbound (Apollo, Lemlist…)</button>
+            <button type="button" class="pill" data-value="lsn">LinkedIn Sales Nav</button>
+            <button type="button" class="pill" data-value="none">No tools</button>
+            <button type="button" class="pill" data-value="spreadsheet">Spreadsheet only</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step" id="s3">
+        <div class="step-eyebrow">Step 3 / 5</div>
+        <div class="step-title">Your go-to-market maturity</div>
+        <div class="q-group">
+          <div class="q-label">Is your ICP (ideal customer profile) defined?</div>
+          <div class="pills" data-name="icp">
+            <button type="button" class="pill" data-value="no">Not defined</button>
+            <button type="button" class="pill" data-value="partial">Partially</button>
+            <button type="button" class="pill" data-value="yes">Yes, clearly defined</button>
+          </div>
+        </div>
+        <div class="q-group">
+          <div class="q-label">Do you have a documented sales process?</div>
+          <div class="pills" data-name="process">
+            <button type="button" class="pill" data-value="no">No</button>
+            <button type="button" class="pill" data-value="informal">Informal / in our heads</button>
+            <button type="button" class="pill" data-value="partial">Partially documented</button>
+            <button type="button" class="pill" data-value="yes">Yes, structured</button>
+          </div>
+        </div>
+        <div class="q-group">
+          <div class="q-label">Has your sales messaging been tested?</div>
+          <div class="pills" data-name="messaging">
+            <button type="button" class="pill" data-value="no">No</button>
+            <button type="button" class="pill" data-value="some">Some tests</button>
+            <button type="button" class="pill" data-value="yes">Yes, iterated and optimized</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step" id="s4">
+        <div class="step-eyebrow">Step 4 / 5</div>
+        <div class="step-title">Your sector & deal profile</div>
+        <div class="q-group">
+          <div class="q-label">Industry</div>
+          <div class="pills" data-name="sector">
+            <button type="button" class="pill" data-value="saas">SaaS / Tech</button>
+            <button type="button" class="pill" data-value="consulting">Consulting / Services</button>
+            <button type="button" class="pill" data-value="biotech">Biotech / Life sciences</button>
+            <button type="button" class="pill" data-value="creative">Agency / Creative</button>
+            <button type="button" class="pill" data-value="industry">Industry / Hardware</button>
+            <button type="button" class="pill" data-value="other">Other</button>
+          </div>
+        </div>
+        <div class="q-group">
+          <div class="q-label">Average contract value (ACV)</div>
+          <div class="pills" data-name="acv">
+            <button type="button" class="pill" data-value="low">&lt; €5k</button>
+            <button type="button" class="pill" data-value="mid">€5k – €25k</button>
+            <button type="button" class="pill" data-value="high">€25k – €100k</button>
+            <button type="button" class="pill" data-value="enterprise">&gt; €100k</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="step" id="s5">
+        <div class="step-eyebrow">Step 5 / 5</div>
+        <div class="step-title">What you're looking for</div>
+        <div class="q-group">
+          <div class="q-label">Primary need (multiple ok)</div>
+          <div class="cards-grid" data-name="need" data-multi="true">
+            <button type="button" class="q-card" data-value="strategy"><span style="font-size:16px">🧭</span><span class="q-card-title">Strategy</span><span class="q-card-sub">GTM, ICP, positioning</span></button>
+            <button type="button" class="q-card" data-value="execution"><span style="font-size:16px">⚡</span><span class="q-card-title">Execution</span><span class="q-card-sub">Outbound, pipeline, deals</span></button>
+            <button type="button" class="q-card" data-value="coaching"><span style="font-size:16px">🎯</span><span class="q-card-title">Coaching</span><span class="q-card-sub">Team in place</span></button>
+            <button type="button" class="q-card" data-value="hiring"><span style="font-size:16px">🔍</span><span class="q-card-title">Hiring</span><span class="q-card-sub">Define profiles, onboard</span></button>
+            <button type="button" class="q-card" data-value="newmarket"><span style="font-size:16px">🌍</span><span class="q-card-title">New market</span><span class="q-card-sub">LATAM or EMEA entry</span></button>
+          </div>
+        </div>
+        <div class="q-group">
+          <div class="q-label">Engagement horizon</div>
+          <div class="pills" data-name="horizon">
+            <button type="button" class="pill" data-value="oneshot">One-off mission</button>
+            <button type="button" class="pill" data-value="3m">3 months</button>
+            <button type="button" class="pill" data-value="6m">6 months</button>
+            <button type="button" class="pill" data-value="ongoing">Ongoing</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="diag-footer">
+        <button type="button" class="btn-back" id="btnBack" style="visibility:hidden">← Back</button>
+        <span class="diag-counter" id="diagCnt">1 / 5</span>
+        <button type="button" class="btn-next" id="btnNext">Next →</button>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result">
+      <div style="text-align:center;margin-bottom:1.5rem">
+        <span class="result-badge" id="rBadge"></span>
+        <div class="result-title" id="rTitle"></div>
+        <div class="result-sub" id="rSub"></div>
+      </div>
+      <div class="result-numbers">
+        <div class="result-num-card">
+          <div class="result-num-label">Recommended hours / month</div>
+          <div class="result-num-val" id="rHours"></div>
+          <div class="result-num-sub">depending on final scope</div>
+        </div>
+        <div class="result-num-card">
+          <div class="result-num-label">Indicative budget / month</div>
+          <div class="result-num-val" id="rPrice"></div>
+          <div class="result-num-sub" id="rPriceSub"></div>
+        </div>
+      </div>
+      <div class="scope-list" id="rScope"></div>
+      <a id="rCta" href="#" class="result-cta">Get in touch with Raphaël →</a>
+      <button type="button" class="btn-restart" id="btnRestart">← Start over</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-name">Raphaël Ferry</div>
+    <div style="font-size:12px;margin-top:.25rem">Fractional Sales Partner · Buenos Aires</div>
+  </div>
+  <div class="footer-links">
+    <a href="mailto:r.ferry@outlook.com">r.ferry@outlook.com</a>
+    <a href="https://www.linkedin.com/in/raphaelferry/" target="_blank">LinkedIn →</a>
+  </div>
+</footer>
+
+<script>
+let cur = 1;
+const answers = {};
+
+function getVal(name) {
+  const c = document.querySelector('[data-name="' + name + '"]');
+  if (!c) return null;
+  const sel = [...c.querySelectorAll('.pill.sel, .q-card.sel')].map(b => b.dataset.value);
+  return c.dataset.multi === 'true' ? sel : (sel[0] || null);
+}
+
+function saveAnswers() {
+  ['country','stage','team','tools','icp','process','messaging','sector','acv','need','horizon'].forEach(n => {
+    const v = getVal(n);
+    if (v !== null) answers[n] = v;
+  });
+}
+
+function updateProgress() {
+  document.getElementById('progFill').style.width = (cur / 5 * 100) + '%';
+  document.getElementById('diagCnt').textContent = cur + ' / 5';
+  document.getElementById('btnBack').style.visibility = cur > 1 ? 'visible' : 'hidden';
+  document.getElementById('btnNext').textContent = cur === 5 ? 'See my results →' : 'Next →';
+}
+
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('s' + n).classList.add('active');
+  cur = n;
+  updateProgress();
+}
+
+document.querySelectorAll('.pill, .q-card').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const container = btn.closest('[data-name]');
+    if (container.dataset.multi !== 'true') {
+      container.querySelectorAll('.pill, .q-card').forEach(b => b.classList.remove('sel'));
+    }
+    btn.classList.toggle('sel');
+  });
+});
+
+document.getElementById('btnNext').addEventListener('click', () => {
+  saveAnswers();
+  if (cur < 5) showStep(cur + 1);
+  else showResult();
+});
+
+document.getElementById('btnBack').addEventListener('click', () => {
+  if (cur > 1) showStep(cur - 1);
+});
+
+document.getElementById('btnRestart').addEventListener('click', () => {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.pill, .q-card').forEach(b => b.classList.remove('sel'));
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('diagWrap').style.display = 'block';
+  showStep(1);
+});
+
+function showResult() {
+  const a = answers;
+  const needs = Array.isArray(a.need) ? a.need : [a.need || 'execution'];
+  const execNeed = needs.includes('execution');
+  const stratNeed = needs.includes('strategy');
+  const coachNeed = needs.includes('coaching');
+  const newMkt = needs.includes('newmarket');
+
+  let complexity = 0;
+  if (a.stage === 'pre') complexity += 1;
+  if (a.stage === 'early') complexity += 2;
+  if (a.stage === 'growth') complexity += 3;
+  if (a.team === 'none') complexity += 3;
+  if (a.team === 'small') complexity += 2;
+  if (a.icp === 'no') complexity += 2;
+  if (a.icp === 'partial') complexity += 1;
+  if (a.process === 'no') complexity += 2;
+  if (a.process === 'informal') complexity += 1;
+  if (a.messaging === 'no') complexity += 1;
+
+  let profile, badgeText, badgeStyle, title, sub;
+  if (newMkt) {
+    profile = 'newmarket';
+    badgeText = 'New Market Entry'; badgeStyle = 'background:#ccfbf1;color:#134e4a';
+    title = 'You need a New Market Entry specialist';
+    sub = 'LATAM or EMEA launch — market mapping, GTM adaptation, local network, first deals.';
+  } else if (stratNeed && !execNeed) {
+    profile = 'coach';
+    badgeText = 'Sales Architect'; badgeStyle = 'background:#fef3c7;color:#92400e';
+    title = 'You need a Sales Architect';
+    sub = 'GTM strategy, ICP definition, positioning and coaching your existing team.';
+  } else if (execNeed && !stratNeed && a.team !== 'none') {
+    profile = 'accelerator';
+    badgeText = 'Revenue Accelerator'; badgeStyle = 'background:#dbeafe;color:#1e40af';
+    title = 'You need a Revenue Accelerator';
+    sub = 'Pipeline acceleration, outbound optimization and closing support alongside your team.';
+  } else if (a.team === 'none' || a.team === 'small') {
+    profile = 'builder';
+    badgeText = 'Sales Builder'; badgeStyle = 'background:#dcfce7;color:#166534';
+    title = 'You need a Sales Builder';
+    sub = 'Build your commercial engine from scratch — process, tools, pipeline, execution.';
+  } else {
+    profile = 'full';
+    badgeText = 'Full Sales Partner'; badgeStyle = 'background:#f3e8ff;color:#6b21a8';
+    title = 'You need a Full Sales Partner';
+    sub = 'End-to-end mission — strategy + execution + coaching.';
+  }
+
+  let baseHours = complexity <= 3 ? 8 : complexity <= 6 ? 15 : complexity <= 8 ? 20 : 30;
+  if (needs.length >= 3) baseHours = Math.min(baseHours + 5, 40);
+
+  const missionMult = (stratNeed && execNeed) ? 1.25 : stratNeed ? 1.5 : newMkt ? 1.6 : 1.0;
+  const sectorMult = { saas: 1.15, consulting: 1.2, biotech: 1.4, creative: 1.0, industry: 1.3 }[a.sector] || 1.1;
+  const teamMult = { none: 1.0, small: 1.15, team: 1.25, structured: 1.35 }[a.team] || 1.0;
+
+  const geoRates = { FR: [100,150], ES: [90,130], LATAM: [60,85], US: [150,200], EU: [95,140], OTHER: [80,110] };
+  const [rMin, rMax] = geoRates[a.country] || geoRates['EU'];
+  const cur2 = (a.country === 'US' || a.country === 'LATAM') ? '$' : '€';
+
+  const hMin = baseHours;
+  const hMax = baseHours + 10;
+  const tMin = Math.round(rMin * missionMult * sectorMult * teamMult);
+  const tMax = Math.round(rMax * missionMult * sectorMult * teamMult);
+  const pMin = Math.round(hMin * tMin / 100) * 100;
+  const pMax = Math.round(hMax * tMax / 100) * 100;
+
+  const scopes = {
+    builder: ['ICP & messaging definition','CRM + outbound stack setup','Pipeline construction from scratch','Outbound execution (email, LinkedIn)','Weekly reporting & iteration'],
+    accelerator: ['Existing pipeline audit','Outbound sequence optimization','Closing & objection coaching','KPIs & forecasting','Sales / marketing alignment'],
+    coach: ['GTM & positioning workshop','Sales process definition','1:1 team coaching','Playbook & sales scripts','Recruiting & onboarding support'],
+    newmarket: ['Market mapping & ICP adaptation','Local network activation','GTM localization','First deals & pipeline','Reporting & optimization'],
+    full: ['Full GTM strategy','Outbound stack setup','Execution & pipeline','Team coaching','Weekly reporting & continuous optimization']
+  };
+
+  document.getElementById('rBadge').textContent = badgeText;
+  document.getElementById('rBadge').style.cssText = badgeStyle;
+  document.getElementById('rTitle').textContent = title;
+  document.getElementById('rSub').textContent = sub;
+  document.getElementById('rHours').textContent = hMin + '–' + hMax + 'h';
+  document.getElementById('rPrice').textContent = cur2 + pMin.toLocaleString() + ' – ' + cur2 + pMax.toLocaleString();
+  document.getElementById('rPriceSub').textContent = 'indicative rate, excl. commission';
+
+  const scopeEl = document.getElementById('rScope');
+  scopeEl.innerHTML = (scopes[profile] || scopes.full).map(s =>
+    '<div class="scope-item"><div class="scope-dot"></div><span>' + s + '</span></div>'
+  ).join('');
+
+  const subject = encodeURIComponent('Fractional Sales Partner — ' + badgeText + ' inquiry');
+  const body = encodeURIComponent(
+    'Hi Raphaël,\n\nI just ran the diagnostic on your website and here is my profile:\n\n' +
+    '- Profile: ' + badgeText + '\n' +
+    '- Estimated scope: ' + hMin + '–' + hMax + 'h/month\n' +
+    '- Budget range: ' + cur2 + pMin.toLocaleString() + ' – ' + cur2 + pMax.toLocaleString() + '/month\n\n' +
+    'I'd love to discuss further.\n\nBest regards'
+  );
+  document.getElementById('rCta').href = 'mailto:r.ferry@outlook.com?subject=' + subject + '&body=' + body;
+
+  document.getElementById('diagWrap').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
